@@ -208,7 +208,6 @@ void SaveData(Data* d, int n, string fileName)
 
 			if (i < n - 1)
 				record << endl;
-
 		}
 	}
 	else
