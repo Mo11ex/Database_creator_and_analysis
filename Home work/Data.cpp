@@ -6,6 +6,7 @@ Data::Data()
 
 	nameProduct.NameProduct = "";
 
+
 	RPlan.Q1 = 0;
 	RPlan.Q2 = 0;
 	RPlan.Q3 = 0;
@@ -40,7 +41,16 @@ Data::~Data()
 
 void Data::Print()
 {
-	cout << "Шифр продукции: " << codeProduct.CodeProduct << endl;
+		cout << "|" << setw(9) << codeProduct.CodeProduct << setw(8) << "|" << setw(13) << nameProduct.NameProduct << setw(12) << "|"
+		<< setw(5) << RPlan.Q1 << setw(5) << "|" << setw(5) << RPlan.Q2 << setw(5) << "|" <<
+		setw(5) << RPlan.Q3 << setw(5) << "|" << setw(5) << RPlan.Q4 << setw(5) << "|" << setw(5) << FRealese.QF1 << setw(5) << "|" <<
+		setw(5) << FRealese.QF2 << setw(5) << "|" << setw(5) << FRealese.QF3 << setw(5) << "|" << setw(5) << FRealese.QF4 << setw(5) << "|" << endl;
+	
+	
+	
+	
+	
+	/*cout << "Шифр продукции: " << codeProduct.CodeProduct << endl;
 	cout << "Наименование продукции: " << nameProduct.NameProduct << endl;
 	cout << "План выпска: " << "\n1 кв: " << RPlan.Q1 <<
 		"\n2 кв: " << RPlan.Q2 <<
@@ -49,7 +59,7 @@ void Data::Print()
 	cout << "Фактический выпуск: " << "\n1 кв: " << FRealese.QF1 <<
 		"\n2 кв: " << FRealese.QF2 <<
 		"\n3 кв: " << FRealese.QF3 <<
-		"\n4 кв: " << FRealese.QF4 << endl;
+		"\n4 кв: " << FRealese.QF4 << endl;*/
 }
 
 void Data::DataEntry(Code codeProduct_, Name nameProduct_, ReleasePlan RPlan_, FactRelease FRealese_)
@@ -57,6 +67,7 @@ void Data::DataEntry(Code codeProduct_, Name nameProduct_, ReleasePlan RPlan_, F
 	codeProduct.CodeProduct = codeProduct_.CodeProduct;
 
 	nameProduct.NameProduct = nameProduct_.NameProduct;
+
 
 	RPlan.Q1 = RPlan_.Q1;
 	RPlan.Q2 = RPlan_.Q2;

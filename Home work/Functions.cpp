@@ -63,11 +63,14 @@ void DataReading(Data* (&d), int& n, string fileName)
 
 void Print(Data* d, int n)
 {
+	cout << "| Шифр продукции | Наименование продукции |              План выпуска             |             Фактический выпуск        |" << endl;
+	cout << "|                |                        |--------------------------------------------------------------------------------" << endl;
+	cout << "|                |                        |    1    |    2    |    3    |    4    |    1    |    2    |    3    |    4    |" << endl;
+	cout << "--------------------------------------------------------------------------------------------------------------------------\n";
 	for (int i = 0; i < n; i++) {
-		cout << "Данные №" << i + 1 << endl;
 
 		d[i].Print();
-		cout << "_________________________________________________\n";
+		cout << "--------------------------------------------------------------------------------------------------------------------------\n";
 	}
 }
 
@@ -128,6 +131,7 @@ void AddData(Data* (&d), int& n)
 
 	cout << "Введите новое наименование продукции: ";
 	cin >> nameProduct.NameProduct;
+
 
 	cout << "Введите новый план выпуска по кварталам: ";
 	cin >> RPlan.Q1 >> RPlan.Q2 >> RPlan.Q3 >> RPlan.Q4;
@@ -201,10 +205,10 @@ void SaveData(Data* d, int n, string fileName)
 		record << n << endl;
 
 		for (int i = 0; i < n; i++) {
-			record << d[i].GetcodeProduct().CodeProduct << "\n";
-			record << d[i].GetnameProduct().NameProduct << "\n";
-			record << d[i].GetRPlan().Q1 << " " << d[i].GetRPlan().Q2 << " " << d[i].GetRPlan().Q3 << " " << d[i].GetRPlan().Q4 << "\n";
-			record << d[i].GetFRealese().QF1 << " " << d[i].GetFRealese().QF2 << " " << d[i].GetFRealese().QF3 << " " << d[i].GetFRealese().QF4 << " ";
+			record << "Код продукта: " << d[i].GetcodeProduct().CodeProduct << "\n";
+			record << "NameProduct: " << d[i].GetnameProduct().NameProduct << "\n";
+			record << "Qplan: " << d[i].GetRPlan().Q1 << " " << d[i].GetRPlan().Q2 << " " << d[i].GetRPlan().Q3 << " " << d[i].GetRPlan().Q4 << "\n";
+			record << "Fpaln: " << d[i].GetFRealese().QF1 << " " << d[i].GetFRealese().QF2 << " " << d[i].GetFRealese().QF3 << " " << d[i].GetFRealese().QF4 << " ";
 
 			if (i < n - 1)
 				record << endl;
