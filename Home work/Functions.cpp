@@ -7,6 +7,7 @@ void DataEntry(Data* (&d), int& n)
 	ReleasePlan RPlan;
 	FactRelease FRel;
 
+	
 	cout << "Введите размер массива: ";
 	cin >> n;
 
@@ -216,6 +217,18 @@ void SaveData(Data* d, int n, string fileName)
 	ofstream record(fileName);
 
 	if (record) {
+		for (int i = 0; i < n; i++) {
+
+			if (d[i].GetRPlan().Q1 + d[i].GetRPlan().Q2 + d[i].GetRPlan().Q3 + d[i].GetRPlan().Q4 > 1.1 * (d[i].GetFRealese().QF1 + d[i].GetFRealese().QF2 + d[i].GetFRealese().QF3 + d[i].GetFRealese().QF4))
+			{
+				record << "Для товара " << d[i].GetnameProduct().NameProduct << " годовой фактический выпуск меньше планового годового выпуска более чем на 10%" << endl;
+			}
+			else
+				record << "Для товара " << d[i].GetnameProduct().NameProduct << " всё норм)" << endl;
+
+			if ((d[i].GetFRealese().QF1 > d[i].GetFRealese().QF2) && (d[i].GetFRealese().QF2 > d[i].GetFRealese().QF3) && (d[i].GetFRealese().QF3 > d[i].GetFRealese().QF4))
+				record << "Для товара " << d[i].GetnameProduct().NameProduct << " фактический выпуск по кварталам убывает." << endl;
+		}
 
 		record << "--------------------------------------------------------------------------------------------------------------------------\n";
 		record << "| Шифр продукции | Наименование продукции |              План выпуска             |             Фактический выпуск        |" << endl;
