@@ -7,13 +7,23 @@ void DataEntry(Data* (&d), int& n)
 	ReleasePlan RPlan;
 	FactRelease FRel;
 
-	
-	cout << "Введите размер массива: ";
-	cin >> n;
 
 	d = new Data[n];
 
-	for (int i = 0; i < n; i++) {
+	Data* tmpValues(nullptr);
+	int inputValue(0);
+
+	while (true) {
+		cout << "Продолжить ввод? (1) Да (0) Нет: ";
+		cin >> inputValue;
+
+		if (inputValue == 0)
+		{
+			n--;
+			break;
+		}
+			
+
 		cout << "Введите код продукции: ";
 		cin >> codeProduct.CodeProduct;
 
@@ -26,9 +36,19 @@ void DataEntry(Data* (&d), int& n)
 		cout << "Введите фактический выпуск по кварталам: ";
 		cin >> FRel.QF1 >> FRel.QF2 >> FRel.QF3 >> FRel.QF4;
 
-		d[i].DataEntry(codeProduct, nameProduct, RPlan, FRel);
+		d[n-1].DataEntry(codeProduct, nameProduct, RPlan, FRel);
 
 		cout << "_________________________________________________\n";
+		
+		{
+			n++;
+			tmpValues = new Data[n];
+			for (int i = 0; i < n - 1; i++)
+				tmpValues[i] = d[i];
+			delete[] d;
+			d = tmpValues;
+			tmpValues = nullptr;
+		}
 	}
 }
 

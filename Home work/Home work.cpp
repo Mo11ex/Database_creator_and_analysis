@@ -26,7 +26,7 @@ int main()
     int _actions;
     string fileName;
 
-    int _size = 0;
+    int _size = 1;
     Data* d = new Data[_size];
 
     while (_stateMenu != 0)
