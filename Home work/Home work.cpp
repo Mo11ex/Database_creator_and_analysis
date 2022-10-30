@@ -25,6 +25,8 @@ int main()
     Menu();
     int _actions;
     string fileName;
+    string fileName2;
+    int action2;
 
     int _size = 1;
     Data* d = new Data[_size];
@@ -127,6 +129,9 @@ int main()
                 cin >> fileName;
 
                 SaveData(d, _size, fileName);
+
+
+                SaveData2(d, _size);
             }
             else
                 cout << "Данные пусты!" << endl;
@@ -138,12 +143,20 @@ int main()
          ///////////////////////////////////////////////////////////////
         case 8:
             system("cls");
+            cout << "Проанализировать введённые данные (1) или считанные из файла (2)?: ";
+            cin >> action2;
 
-            cout << "Введите название файла: ";
-            cin >> fileName;
+            system("cls");
 
-            Analys(d, _size, fileName);
+            if (action2 == 1) {
+                Analys(d, _size);
+            }
+            else {
+                cout << "Введите название файла: ";
+                cin >> fileName;
 
+                Analys(d, _size, fileName);
+            }
             system("pause");
             system("cls");
             Menu();

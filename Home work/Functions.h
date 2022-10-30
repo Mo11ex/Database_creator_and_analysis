@@ -11,4 +11,6 @@ void AddData(Data* (&d), int& n);
 void DeleteData(Data* (&d), int& n);
 void SortingData(Data* d, int n);
 void SaveData(Data* d, int n, string fileName);
+void SaveData2(Data* d, int n);
+void Analys(Data* d, int n);
 void Analys(Data* (&d), int& n, string fileName);

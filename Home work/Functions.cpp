@@ -243,8 +243,6 @@ void SaveData(Data* d, int n, string fileName)
 			{
 				record << "Для товара " << d[i].GetnameProduct().NameProduct << " годовой фактический выпуск меньше планового годового выпуска более чем на 10%" << endl;
 			}
-			else
-				record << "Для товара " << d[i].GetnameProduct().NameProduct << " всё норм)" << endl;
 
 			if ((d[i].GetFRealese().QF1 > d[i].GetFRealese().QF2) && (d[i].GetFRealese().QF2 > d[i].GetFRealese().QF3) && (d[i].GetFRealese().QF3 > d[i].GetFRealese().QF4))
 				record << "Для товара " << d[i].GetnameProduct().NameProduct << " фактический выпуск по кварталам убывает." << endl;
@@ -280,6 +278,29 @@ void SaveData(Data* d, int n, string fileName)
 
 	record.close();
 }
+void SaveData2(Data* d, int n)
+{
+	ofstream record("analysis.txt");
+
+	if (record){
+		record << n << endl;
+		for (int i = 0; i < n; i++) {
+
+			record  << d[i].GetcodeProduct().CodeProduct << "\n";
+			record << d[i].GetnameProduct().NameProduct << "\n";
+			record << d[i].GetRPlan().Q1 << " " << d[i].GetRPlan().Q2 << " " << d[i].GetRPlan().Q3 << " " << d[i].GetRPlan().Q4 << "\n";
+			record  << d[i].GetFRealese().QF1 << " " << d[i].GetFRealese().QF2 << " " << d[i].GetFRealese().QF3 << " " << d[i].GetFRealese().QF4 << " ";
+
+			if (i < n - 1)
+				record << endl;
+		}
+	}
+	else
+		cout << "Ошибка открытия файла!" << endl;
+
+
+	record.close();
+}
 
 void Analys(Data* (&d), int& n, string fileName)
 {
@@ -307,8 +328,6 @@ void Analys(Data* (&d), int& n, string fileName)
 			{
 				cout << "Для товара " << d[i].GetnameProduct().NameProduct << " годовой фактический выпуск меньше планового годового выпуска более чем на 10%" << endl;
 			}
-			else
-				cout << "Для товара " << d[i].GetnameProduct().NameProduct << " всё норм)" << endl;
 
 			if ((d[i].GetFRealese().QF1 > d[i].GetFRealese().QF2) && (d[i].GetFRealese().QF2 > d[i].GetFRealese().QF3) && (d[i].GetFRealese().QF3 > d[i].GetFRealese().QF4))
 				cout << "Для товара " << d[i].GetnameProduct().NameProduct << " фактический выпуск по кварталам убывает." << endl;
@@ -318,4 +337,19 @@ void Analys(Data* (&d), int& n, string fileName)
 		cout << "Ошибка открытия данных!" << endl;
 
 	reading.close();
+}
+
+void Analys(Data* d, int n)
+{
+	for (int i = 0; i < n; i++) {
+
+		if (d[i].GetRPlan().Q1 + d[i].GetRPlan().Q2 + d[i].GetRPlan().Q3 + d[i].GetRPlan().Q4 > 1.1 * (d[i].GetFRealese().QF1 + d[i].GetFRealese().QF2 + d[i].GetFRealese().QF3 + d[i].GetFRealese().QF4))
+		{
+			cout << "Для товара " << d[i].GetnameProduct().NameProduct << " годовой фактический выпуск меньше планового годового выпуска более чем на 10%" << endl;
+		}
+
+		if ((d[i].GetFRealese().QF1 > d[i].GetFRealese().QF2) && (d[i].GetFRealese().QF2 > d[i].GetFRealese().QF3) && (d[i].GetFRealese().QF3 > d[i].GetFRealese().QF4))
+			cout << "Для товара " << d[i].GetnameProduct().NameProduct << " фактический выпуск по кварталам убывает." << endl;
+	}
+
 }
