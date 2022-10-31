@@ -237,17 +237,6 @@ void SaveData(Data* d, int n, string fileName)
 	ofstream record(fileName);
 
 	if (record) {
-		for (int i = 0; i < n; i++) {
-
-			if (d[i].GetRPlan().Q1 + d[i].GetRPlan().Q2 + d[i].GetRPlan().Q3 + d[i].GetRPlan().Q4 > 1.1 * (d[i].GetFRealese().QF1 + d[i].GetFRealese().QF2 + d[i].GetFRealese().QF3 + d[i].GetFRealese().QF4))
-			{
-				record << "Для товара " << d[i].GetnameProduct().NameProduct << " годовой фактический выпуск меньше планового годового выпуска более чем на 10%" << endl;
-			}
-
-			if ((d[i].GetFRealese().QF1 > d[i].GetFRealese().QF2) && (d[i].GetFRealese().QF2 > d[i].GetFRealese().QF3) && (d[i].GetFRealese().QF3 > d[i].GetFRealese().QF4))
-				record << "Для товара " << d[i].GetnameProduct().NameProduct << " фактический выпуск по кварталам убывает." << endl;
-		}
-
 		record << "--------------------------------------------------------------------------------------------------------------------------\n";
 		record << "| Шифр продукции | Наименование продукции |              План выпуска             |             Фактический выпуск        |" << endl;
 		record << "|                |                        |--------------------------------------------------------------------------------" << endl;
@@ -281,25 +270,84 @@ void SaveData(Data* d, int n, string fileName)
 void SaveData2(Data* d, int n)
 {
 	ofstream record("analysis.txt");
+	int si = 0;
+	for (int i = 0; i < n; i++) {
 
-	if (record){
-		record << n << endl;
+		if (d[i].GetRPlan().Q1 + d[i].GetRPlan().Q2 + d[i].GetRPlan().Q3 + d[i].GetRPlan().Q4 > 1.1 * (d[i].GetFRealese().QF1 + d[i].GetFRealese().QF2 + d[i].GetFRealese().QF3 + d[i].GetFRealese().QF4))
+		{
+			si++;
+		}
+	}
+	int siz = 0;
+	for (int i = 0; i < n; i++) {
+		if ((d[i].GetFRealese().QF1 > d[i].GetFRealese().QF2) && (d[i].GetFRealese().QF2 > d[i].GetFRealese().QF3) && (d[i].GetFRealese().QF3 > d[i].GetFRealese().QF4)) {
+			siz++;
+		}
+	}
+	int temp = 0;
+	int temp2 = 0;
+	Data* a = new Data[si];
+	Data* b = new Data[siz];
+
+	if (record) {
 		for (int i = 0; i < n; i++) {
 
-			record  << d[i].GetcodeProduct().CodeProduct << "\n";
-			record << d[i].GetnameProduct().NameProduct << "\n";
-			record << d[i].GetRPlan().Q1 << " " << d[i].GetRPlan().Q2 << " " << d[i].GetRPlan().Q3 << " " << d[i].GetRPlan().Q4 << "\n";
-			record  << d[i].GetFRealese().QF1 << " " << d[i].GetFRealese().QF2 << " " << d[i].GetFRealese().QF3 << " " << d[i].GetFRealese().QF4 << " ";
+			if (d[i].GetRPlan().Q1 + d[i].GetRPlan().Q2 + d[i].GetRPlan().Q3 + d[i].GetRPlan().Q4 > 1.1 * (d[i].GetFRealese().QF1 + d[i].GetFRealese().QF2 + d[i].GetFRealese().QF3 + d[i].GetFRealese().QF4))
+			{
+				record << "Для товара " << d[i].GetnameProduct().NameProduct << " годовой фактический выпуск меньше планового годового выпуска более чем на 10%" << endl;
+				a[temp] = d[i];
+				temp++;
 
-			if (i < n - 1)
-				record << endl;
+			}
 		}
+		record << "--------------------------------------------------------------------------------------------------------------------------\n";
+		record << "| Шифр продукции | Наименование продукции |              План выпуска             |             Фактический выпуск        |" << endl;
+		record << "|                |                        |--------------------------------------------------------------------------------" << endl;
+		record << "|                |                        |    1    |    2    |    3    |    4    |    1    |    2    |    3    |    4    |" << endl;
+		record << "--------------------------------------------------------------------------------------------------------------------------\n";
+
+		for (int i = 0; i < si; i++) {
+
+			record << "|" << setw(9) << a[i].GetcodeProduct().CodeProduct << setw(8) << "|" << setw(13) << a[i].GetnameProduct().NameProduct << setw(12) << "|"
+				<< setw(5) << a[i].GetRPlan().Q1 << setw(5) << "|" << setw(5) << a[i].GetRPlan().Q2 << setw(5) << "|" <<
+				setw(5) << a[i].GetRPlan().Q3 << setw(5) << "|" << setw(5) << a[i].GetRPlan().Q4 << setw(5) << "|" << setw(5) << a[i].GetFRealese().QF1 << setw(5) << "|" <<
+				setw(5) << a[i].GetFRealese().QF2 << setw(5) << "|" << setw(5) << a[i].GetFRealese().QF3 << setw(5) << "|" << setw(5) << a[i].GetFRealese().QF4 << setw(5) << "|" << endl;
+			record << "--------------------------------------------------------------------------------------------------------------------------\n";
+		}
+
+		record << "\n";
+
+		for (int i = 0; i < n; i++) {
+			if ((d[i].GetFRealese().QF1 > d[i].GetFRealese().QF2) && (d[i].GetFRealese().QF2 > d[i].GetFRealese().QF3) && (d[i].GetFRealese().QF3 > d[i].GetFRealese().QF4)) {
+				record << "Для товара " << d[i].GetnameProduct().NameProduct << " фактический выпуск по кварталам убывает." << endl;
+				b[temp2] = d[i];
+				temp2++;
+			}
+		}
+		record << "--------------------------------------------------------------------------------------------------------------------------\n";
+		record << "| Шифр продукции | Наименование продукции |              План выпуска             |             Фактический выпуск        |" << endl;
+		record << "|                |                        |--------------------------------------------------------------------------------" << endl;
+		record << "|                |                        |    1    |    2    |    3    |    4    |    1    |    2    |    3    |    4    |" << endl;
+		record << "--------------------------------------------------------------------------------------------------------------------------\n";
+
+		for (int i = 0; i < siz; i++) {
+
+			record << "|" << setw(9) << b[i].GetcodeProduct().CodeProduct << setw(8) << "|" << setw(13) << b[i].GetnameProduct().NameProduct << setw(12) << "|"
+				<< setw(5) << b[i].GetRPlan().Q1 << setw(5) << "|" << setw(5) << b[i].GetRPlan().Q2 << setw(5) << "|" <<
+				setw(5) << b[i].GetRPlan().Q3 << setw(5) << "|" << setw(5) << b[i].GetRPlan().Q4 << setw(5) << "|" << setw(5) << b[i].GetFRealese().QF1 << setw(5) << "|" <<
+				setw(5) << b[i].GetFRealese().QF2 << setw(5) << "|" << setw(5) << b[i].GetFRealese().QF3 << setw(5) << "|" << setw(5) << b[i].GetFRealese().QF4 << setw(5) << "|" << endl;
+			record << "--------------------------------------------------------------------------------------------------------------------------\n";
+		}
+
+
+		cout << "Данные сохранены в файл analysis.txt!" << endl;
 	}
 	else
 		cout << "Ошибка открытия файла!" << endl;
 
-
 	record.close();
+	delete[] a;
+	delete[] b;
 }
 
 void Analys(Data* (&d), int& n, string fileName)

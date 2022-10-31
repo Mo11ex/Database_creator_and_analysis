@@ -143,20 +143,9 @@ int main()
          ///////////////////////////////////////////////////////////////
         case 8:
             system("cls");
-            cout << "Проанализировать введённые данные (1) или считанные из файла (2)?: ";
-            cin >> action2;
-
-            system("cls");
-
-            if (action2 == 1) {
-                Analys(d, _size);
-            }
-            else {
-                cout << "Введите название файла: ";
-                cin >> fileName;
-
-                Analys(d, _size, fileName);
-            }
+            
+            SaveData2(d, _size);
+            
             system("pause");
             system("cls");
             Menu();
